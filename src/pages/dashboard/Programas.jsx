@@ -32,7 +32,14 @@ export default function Programas() {
     };
 
     const cargarDivisiones = async () => {
+        try {
+            const response = await axios.get(DIVISIONES_URL);
+            setDivisiones(response.data);
+        } catch (error) {
+            console.error('Error al cargar divisiones:', error);
+        }
     };
+
 
     const abrirModal = (programa = null) => {
         if (programa) {
@@ -108,7 +115,7 @@ export default function Programas() {
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Gestión de Programas Educativos</h1>
-                <button 
+                <button
                     onClick={() => abrirModal()}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
                 >
@@ -206,7 +213,7 @@ export default function Programas() {
                             <h2 className="text-xl font-semibold text-gray-800">
                                 {editando ? 'Editar Programa' : 'Nuevo Programa'}
                             </h2>
-                            <button 
+                            <button
                                 onClick={cerrarModal}
                                 className="text-gray-400 hover:text-gray-600"
                             >
