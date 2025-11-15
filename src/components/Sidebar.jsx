@@ -16,6 +16,7 @@ export default function Sidebar({ isAbierto }) {
         { path: '/dashboard/divisiones', label: 'Divisiones', icon: FaBuilding },
         { path: '/dashboard/programas', label: 'Programas', icon: FaBook },
         { path: '/dashboard/usuarios', label: 'Usuarios', icon: FaUsers },
+        { path: '/dashboard/materias', label: 'Materias', icon: FaBook },
         { path: '/dashboard/reportes', label: 'Reportes', icon: FaChartBar },
         { path: '/dashboard/configuracion', label: 'Configuración', icon: FaCog },
     ];
