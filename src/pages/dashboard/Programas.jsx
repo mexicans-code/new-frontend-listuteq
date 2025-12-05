@@ -42,21 +42,27 @@ export default function Programas() {
 
 
     const abrirModal = (programa = null) => {
-        if (programa) {
-            setEditando(true);
-            setProgramaActual(programa);
-        } else {
-            setEditando(false);
-            setProgramaActual({
-                id: null,
-                idDivision: '',
-                nombre: '',
-                descripcion: '',
-                activo: true
-            });
-        }
-        setShowModal(true);
-    };
+    if (programa) {
+        setEditando(true);
+        setProgramaActual({
+            id: programa.id,
+            idDivision: programa.idDivision || '',
+            nombre: programa.nombrePrograma,
+            descripcion: programa.descripcionPrograma,
+            activo: programa.activo
+        });
+    } else {
+        setEditando(false);
+        setProgramaActual({
+            id: null,
+            idDivision: '',
+            nombre: '',
+            descripcion: '',
+            activo: true
+        });
+    }
+    setShowModal(true);
+};
 
     const cerrarModal = () => {
         setShowModal(false);
@@ -78,32 +84,32 @@ export default function Programas() {
     };
 
     const guardarPrograma = async (e) => {
-        e.preventDefault();
-
-        if (!programaActual.idDivision || !programaActual.nombre) {
-            alert('Por favor complete todos los campos obligatorios');
-            return;
-        }
-
-        try {
-            if (editando) {
-                await axios.put(`${API_URL}/${programaActual.id}`, programaActual);
-                alert('Programa actualizado exitosamente');
-            } else {
-                await axios.post(API_URL, {
-                    idDivision: parseInt(programaActual.idDivision),
-                    nombre: programaActual.nombre,
-                    descripcion: programaActual.descripcion
-                });
-                alert('Programa creado exitosamente');
+            e.preventDefault();
+    
+            if (!programaActual.idDivision || !programaActual.nombre) {
+                alert('Por favor complete todos los campos obligatorios');
+                return;
             }
-            cargarProgramas();
-            cerrarModal();
-        } catch (error) {
-            console.error('Error al guardar programa:', error);
-            alert('Error al guardar el programa: ' + (error.response?.data?.message || error.message));
-        }
-    };
+    
+            try {
+                if (editando) {
+                    await axios.put(`${API_URL}/${programaActual.id}`, programaActual);
+                    alert('Programa actualizado exitosamente');
+                } else {
+                    await axios.post(API_URL, {
+                        idDivision: parseInt(programaActual.idDivision),
+                        nombre: programaActual.nombre,
+                        descripcion: programaActual.descripcion
+                    });
+                    alert('Programa creado exitosamente');
+                }
+                cargarProgramas();
+                cerrarModal();
+            } catch (error) {
+                console.error('Error al guardar programa:', error);
+                alert('Error al guardar el programa: ' + (error.response?.data?.message || error.message));
+            }
+        };
 
     const deshabilitarPrograma = async (id) => {
     };
